@@ -19,10 +19,16 @@ class RatingsBreakdown(MRJob):
 
     def mapper_get_ratings(self, _, line):
         (userID, movieID, rating, timestamp) = line.split('::')
+        yield movieID, 1
+ def mapper_get_ratings(self, _, line):
+        (userID, movieID, rating, timestamp) = line.split('::')
         yield rating, 1
 
+        
     def reducer_count_ratings(self, key, values):
         yield key, sum(values)
 
 if __name__ == '__main__':
     RatingsBreakdown.run()
+    
+   
